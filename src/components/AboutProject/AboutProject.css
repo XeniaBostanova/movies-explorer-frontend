@@ -1,0 +1,248 @@
+.project {
+  padding-top: 110px;
+  padding-bottom: 110px;
+  max-width: 1140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .project {
+    max-width: 890px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .project {
+    padding-top: 90px;
+    padding-bottom: 90px;
+    max-width: 668px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .project {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    max-width: 284px;
+  }
+}
+
+.project__title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 27px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #dadada;
+  margin: 0;
+  letter-spacing: -0.04em
+}
+
+@media screen and (max-width: 425px) {
+  .project__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+}
+
+.project__main-container {
+  display: flex;
+  padding-top: 70px;
+  padding-bottom: 110px;
+}
+
+@media screen and (max-width: 768px) {
+  .project__main-container {
+    padding-bottom: 93px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .project__main-container {
+    flex-direction: column;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}
+
+.project__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 550px;
+}
+
+@media screen and (max-width: 768px) {
+  .project__container {
+    max-width: 319px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .project__container {
+    max-width: 284px;
+  }
+}
+
+.project__container:first-child {
+  padding-right: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .project__container:first-child {
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .project__container:first-child {
+    padding-right: 0;
+    padding-bottom: 56px;
+  }
+}
+
+.project__subtitle {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  padding-bottom: 26px;
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 768px) {
+  .project__subtitle {
+    padding-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 16px;
+  }
+}
+
+.project__description {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .project__description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .project__description {
+    font-size: 11px;
+    line-height: 16px
+  }
+}
+
+.project__duration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+}
+
+@media screen and (max-width: 425px) {
+  .project__duration-container {
+    height: 35px;
+  }
+}
+
+.project__duration {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 36px;
+  margin: 0;
+  text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+  .project__duration {
+    font-size: 11px;
+    line-height: 35px
+  }
+}
+
+.project__duration_type_backend {
+  background-color: #3DDC84;
+  width: 20%;
+  color: #000;
+}
+
+@media screen and (max-width: 425px) {
+  .project__duration_type_backend {
+    width: 35%;
+  }
+}
+
+.project__duration_type_frontend {
+  background-color: #303030;
+  width: 80%;
+}
+
+@media screen and (max-width: 425px) {
+  .project__duration_type_frontend {
+    width: 65%;
+  }
+}
+
+.project__task-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 14px;
+}
+
+@media screen and (max-width: 425px) {
+  .project__task-container {
+    padding-top: 10px;
+  }
+}
+
+.project__task {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  color: #8B8B8B;
+  text-align: center;
+  margin: 0;
+}
+
+@media screen and (max-width: 425px) {
+  .project__task {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
+
+.project__task_type_backend {
+  width: 20%;
+}
+
+@media screen and (max-width: 425px) {
+  .project__task_type_backend {
+    width: 35%;
+  }
+}
+
+.project__task_type_frontend {
+  width: 80%;
+}
+
+@media screen and (max-width: 425px) {
+  .project__task_type_frontend {
+    width: 65%;
+  }
+}

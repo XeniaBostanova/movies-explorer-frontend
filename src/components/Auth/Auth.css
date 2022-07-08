@@ -45,7 +45,7 @@
 }
 
 .auth__logo:hover {
-  opacity: .6;
+  transform: scale(1.1);
 }
 
 .auth__title {
