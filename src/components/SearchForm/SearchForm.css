@@ -109,6 +109,9 @@
   background-color: #222222;
   padding-left: 63px;
   outline-color: #222222;
+  caret-color: #fff;
+  color: #fff;
+  width: 65%;
 }
 
 .search__input::placeholder {
