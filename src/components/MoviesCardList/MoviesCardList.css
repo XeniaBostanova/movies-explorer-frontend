@@ -1,26 +1,26 @@
 .movies-container {
   display: flex;
   flex-direction: column;
-  max-width: 1140px;
+  max-width: calc(100% - 140px);
   padding-top: 80px;
-  padding-bottom: 80px;
+  padding-bottom: 86px;
   margin: 0 auto;
 }
 
 @media screen and (max-width: 1024px) {
   .movies-container {
-    max-width: 890px;
+    max-width: calc(100% - 134px);
   }
 }
 @media screen and (max-width: 768px) {
   .movies-container {
-    max-width: 708px;
+    max-width: calc(100% - 60px);
   }
 }
 
 @media screen and (max-width: 425px) {
   .movies-container {
-    max-width: 300px;
+    max-width: calc(100% - 20px);
     padding-top: 50px;
   }
 }

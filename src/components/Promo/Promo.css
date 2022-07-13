@@ -2,7 +2,6 @@
   display: flex;
   width: 100%;
   background-color: #073042;
-  min-height: 524px;
   padding-bottom: 50px;
 }
 
@@ -41,14 +40,14 @@
     justify-content: center;
     align-items: center;
     max-width: 680px;
-    padding: 45px 0 10px 0;
+    padding: 48px 0 10px 0;
   }
 }
 
 @media screen and (max-width: 425px) {
   .promo__container {
     max-width: 310px;
-    padding: 40px 0 0 0;
+    padding: 44px 0 0 0;
   }
 }
 
@@ -76,6 +75,7 @@
   .promo__title {
     font-size: 30px;
     line-height: 38px;
+    letter-spacing: -0.04em;
   }
 }
 

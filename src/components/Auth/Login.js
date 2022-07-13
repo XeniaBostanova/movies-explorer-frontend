@@ -22,7 +22,7 @@ function Login() {
       </div>
     </form>
     <p className="auth__subtitle">Еще не зарегистрированы? 
-     <Link to="/sign-up" className="auth__link"> Регистрация</Link>
+     <Link to="/signup" className="auth__link"> Регистрация</Link>
     </p>
   </section>
   )

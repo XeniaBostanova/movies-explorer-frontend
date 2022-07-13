@@ -25,7 +25,7 @@ function Register() {
         </div>
       </form>
       <p className="auth__subtitle">Уже зарегистрированы? 
-       <Link to="/sign-in" className="auth__link"> Войти</Link>
+       <Link to="/signin" className="auth__link"> Войти</Link>
       </p>
     </section>
   )

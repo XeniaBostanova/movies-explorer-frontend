@@ -25,7 +25,7 @@
 }
 
 .techs__main-title {
-  width: 1140px;
+  width: calc(100% - 140px);
   font-size: 22px;
   line-height: 27px;
   font-weight: 400;
@@ -38,14 +38,13 @@
 
 @media screen and (max-width: 1024px) {
   .techs__main-title {
-    width: 890px;
+    width: calc(100% - 134px);
   }
 }
 
 @media screen and (max-width: 768px) {
   .techs__main-title {
-    width: 668px;
-    padding-bottom: 28px;
+    width: calc(100% - 100px);
   }
 }
 
@@ -53,7 +52,8 @@
   .techs__main-title {
     font-size: 18px;
     line-height: 22px;
-    width: 284px;
+    padding-bottom: 28px;
+    width: calc(100% - 36px);
   }
 }
 
@@ -145,6 +145,7 @@
   background-color: #303030;
   border-radius: 10px;
   width: 90px;
+  height: 36px;
   text-align: center;
   padding-top: 21px;
   letter-spacing: -0.04em;
@@ -155,6 +156,5 @@
     font-size: 12px;
     line-height: 15px;
     width: 84px;
-    height: 36px;
   }
 }

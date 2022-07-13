@@ -1,7 +1,7 @@
 .project {
   padding-top: 110px;
   padding-bottom: 110px;
-  max-width: 1140px;
+  max-width: calc(100% - 140px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,7 @@
 
 @media screen and (max-width: 1024px) {
   .project {
-    max-width: 890px;
+    max-width: calc(100% - 134px);
   }
 }
 
@@ -18,7 +18,7 @@
   .project {
     padding-top: 90px;
     padding-bottom: 90px;
-    max-width: 668px;
+    max-width: calc(100% - 100px);
   }
 }
 
@@ -26,7 +26,7 @@
   .project {
     padding-top: 70px;
     padding-bottom: 70px;
-    max-width: 284px;
+    max-width: calc(100% - 36px);
   }
 }
 

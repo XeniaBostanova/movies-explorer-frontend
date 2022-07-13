@@ -36,21 +36,17 @@ function App() {
             <Profile />
           </Route>
 
-          <Route path="/sign-up">
+          <Route path="/signup">
             <Register /> 
           </Route>
 
-          <Route path="/sign-in">
+          <Route path="/signin">
             <Login /> 
           </Route>
 
           <Route path="*">
             <NotFoundPage /> 
           </Route>
-          
-          {/* <Route>
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-          </Route> */}
 
         </Switch>
 
