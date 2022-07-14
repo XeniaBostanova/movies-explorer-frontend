@@ -6,7 +6,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 function MoviesCardList() {
   return (
     <section className="movies-container">
-      <div className="movies-list">
+      <ul className="movies-list">
         {
           movies.map(movie => (
             <MoviesCard
@@ -15,7 +15,7 @@ function MoviesCardList() {
             />
           ))
         }
-      </div>  
+      </ul>  
       <button className="movies-list__button" type="button">Ещё</button>
     </section>
   )

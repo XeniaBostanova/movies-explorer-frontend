@@ -5,18 +5,23 @@ function Portfolio() {
   return (
     <section className="portfolio">
       <h5 className="portfolio__title">Портфолио</h5>
-      <div className="portfolio__container">
-        <p className="portfolio__item">Статичный сайт</p>
-        <a href="https://xeniabostanova.github.io/how-to-learn" rel="noopener noreferrer" target="_blank"><div className="portfolio__link"></div></a>
-      </div>
-      <div className="portfolio__container">
-        <p className="portfolio__item">Адаптивный сайт</p>
-        <a href="https://xeniabostanova.github.io/russian-travel" rel="noopener noreferrer" target="_blank"><div className="portfolio__link"></div></a>
-      </div>
-      <div className="portfolio__container">
-        <p className="portfolio__item">Одностраничное приложение</p>
-        <a href="https://xeniabostanova.github.io/react-mesto-auth" rel="noopener noreferrer" target="_blank"><div className="portfolio__link"></div></a>
-      </div>
+      <ul className="portfolio__container">
+        <li className="portfolio__item">
+          <a className="portfolio__link" href="https://xeniabostanova.github.io/how-to-learn" target="_blank" rel="noopener noreferrer">
+            Статичный сайт
+          </a>
+        </li>
+        <li className="portfolio__item">
+          <a className="portfolio__link" href="https://xeniabostanova.github.io/russian-travel" target="_blank" rel="noopener noreferrer">
+            Адаптивный сайт
+          </a>
+        </li>
+        <li className="portfolio__item">
+          <a className="portfolio__link" href="https://xeniabostanova.github.io/react-mesto-auth" target="_blank" rel="noopener noreferrer">
+            Одностраничное приложение
+          </a>
+        </li>
+      </ul>
     </section>
   )
 }

@@ -4,7 +4,7 @@ import './MoviesCard.css';
 
 function MoviesCard({movie}) {
   return (
-    <div className="movie">
+    <li className="movie">
       <div className="movie__main-container">
         <div className="movie__container">
           <h2 className="movie__title">{movie.nameRU}</h2>
@@ -22,7 +22,7 @@ function MoviesCard({movie}) {
         
       </div>
       <img src={movie.image} alt={movie.nameRU} className="movie__image" />
-    </div>
+    </li>
   )
 }
 

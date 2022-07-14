@@ -31,6 +31,8 @@
   grid-column-gap: 24px;
   grid-row-gap: 30px;
   justify-items: center;
+  margin: 0;
+  padding-left: 0;
 }
 
 @media screen and (max-width: 768px) {
