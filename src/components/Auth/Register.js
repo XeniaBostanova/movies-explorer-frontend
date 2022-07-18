@@ -33,6 +33,7 @@ function Register({isLoading, onRegister, message}) {
             value={values.name || ''}
             onChange={handleChange}
             className="auth__form-item auth__form-item_type_name"
+            pattern="^[а-яА-Яa-zA-ZЁё\-\s]*$"
             minLength="2" maxLength="40" required />
             <span className="auth__input-error">{errors.name || ''}</span>
           <label htmlFor="email-input" className="auth__label">E-mail</label>
@@ -43,6 +44,7 @@ function Register({isLoading, onRegister, message}) {
             value={values.email || ''}
             onChange={handleChange}
             className="auth__form-item auth__form-item_type_email"
+            pattern = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
             required />
           <span className="auth__input-error">{errors.email || ''}</span>
           <label htmlFor="password-input" className="auth__label">Пароль</label>

@@ -30,10 +30,26 @@ function Login({isLoading, onLogin}) {
     <form className="auth__form" onSubmit={handleSubmit}>
       <div className="auth__container">
         <label htmlFor="email-input" className="auth__label">E-mail</label>
-        <input id="email-input" type="email" name="email" value={values.email || ''} onChange={handleChange} className="auth__form-item auth__form-item_type_email" minLength="4" maxLength="40" required />
+        <input 
+          id="email-input"
+          type="email"
+          name="email"
+          value={values.email || ''}
+          onChange={handleChange}
+          className="auth__form-item auth__form-item_type_email"
+          pattern = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+          required />
         <span className="auth__input-error">{errors.email || ''}</span>
         <label htmlFor="password-input" className="auth__label">Пароль</label>
-        <input id="password-input" type="password" name="password" value={values.password || ''} onChange={handleChange} className="auth__form-item auth__form-item_type_password" minLength="8" maxLength="50" required />
+        <input 
+          id="password-input"
+          type="password"
+          name="password"
+          value={values.password || ''}
+          onChange={handleChange}
+          className="auth__form-item auth__form-item_type_password"
+          minLength="8" maxLength="50"
+          required />
         <span className="auth__input-error">{errors.password || ''}</span>
         <button disabled={disabled} type="submit" className="auth__button auth__button_type_login">Войти</button>
       </div>

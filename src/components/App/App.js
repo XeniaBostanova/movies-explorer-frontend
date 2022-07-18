@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 import Login from '../Auth/Login';
 import Movies from '../Movies/Movies';
@@ -11,12 +11,18 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import { mainApi } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
 
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    tokenCheck();
+  }, [])
 
   function handleRegisterSubmit(name, email, password) {
     mainApi.register(name, email, password)
@@ -42,53 +48,87 @@ function App() {
       })
   }
 
+  function tokenCheck() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      setLoggedIn(true);
+      mainApi.getContent(jwt)
+        .then((res) => {
+          if (res) {
+            // setUserEmail(res.email);
+            history.push('/');
+          }
+        })
+        .catch((err) => console.log(err))
+    }
+  }
+
+  function handleUpdateUser({name, email}) {
+    mainApi.editProfile({name, email})
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.log(err))
+  }
+
+  function handleUserSignOut() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    history.push('/');
+  }
+
   return (
-    <div className="App">
-      <Header />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+        <Header />
 
-      <Switch>
-          <Route exact path="/">
-            <Main />
-            <Footer />
-          </Route>
+        <Switch>
+            <Route exact path="/">
+              <Main />
+              <Footer />
+            </Route>
 
-          <Route path="/movies">
-            <Movies />
-            <Footer />
-          </Route>
+            <Route path="/movies">
+              <Movies />
+              <Footer />
+            </Route>
 
-          <Route path="/saved-movies">
-            <SavedMovies />
-            <Footer />
-          </Route>
+            <Route path="/saved-movies">
+              <SavedMovies />
+              <Footer />
+            </Route>
 
-          <Route path="/profile">
-            <Profile />
-          </Route>
-
-          <Route path="/signup">
-            {loggedIn ? <Redirect to="/" /> :
-              <Register 
-                onRegister={handleRegisterSubmit}
+            <Route path="/profile">
+              <Profile 
+                onUpdateUser={handleUpdateUser}
+                onSignOut={handleUserSignOut}
               />
-            }  
-          </Route>
+            </Route>
 
-          <Route path="/signin">
-            {loggedIn ? <Redirect to="/" /> :
-              <Login 
-                onLogin={handleLoginSubmit}
-              /> 
-            }  
-          </Route>
+            <Route path="/signup">
+              {loggedIn ? <Redirect to="/" /> :
+                <Register 
+                  onRegister={handleRegisterSubmit}
+                />
+              }  
+            </Route>
 
-          <Route path="*">
-            <NotFoundPage /> 
-          </Route>
+            <Route path="/signin">
+              {loggedIn ? <Redirect to="/" /> :
+                <Login 
+                  onLogin={handleLoginSubmit}
+                /> 
+              }  
+            </Route>
 
-        </Switch>
+            <Route path="*">
+              <NotFoundPage /> 
+            </Route>
 
-    </div>
+          </Switch>
+
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
