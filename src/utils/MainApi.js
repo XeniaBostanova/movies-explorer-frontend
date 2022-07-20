@@ -58,6 +58,30 @@ class MainApi {
     })
       .then(this._getResponseData)
   }
+
+  saveMovie(data) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then(this._getResponseData)
+  }
+
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: this._headers,
+    })
+      .then(this._getResponseData)
+  }
+
+  deleteMovie(id) {
+    return fetch(`${this._baseUrl}/movies/${id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then(this._getResponseData)
+  }
 }
 
 export const mainApi = new MainApi({

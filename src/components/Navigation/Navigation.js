@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link, Switch, Route, NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import account from '../../images/account.svg'
 import './Navigation.css';
 
-function Navigation() {
-  
+function Navigation({loggedIn}) {
   return (
     <nav className="nav">
-      <Switch>
-        <Route exact path="/">       
+      {!loggedIn ? (         
+        <>
           <nav className="nav__container">
             <Link to='/signup' className="nav__sign">
               <p className="nav__text">Регистрация</p>
@@ -17,9 +16,9 @@ function Navigation() {
               <p className="nav__text">Войти</p>
             </Link>
           </nav>
-        </Route>
-      
-        <Route path="/(profile|movies|saved-movies)">
+        </>
+      ) : (
+        <>  
           <nav className="nav__container nav__container_desktop">
             <div className="nav__item-container">
               <NavLink to='/movies' className="nav__item" activeClassName="nav__item_active">Фильмы</NavLink> 
@@ -52,11 +51,10 @@ function Navigation() {
               </div>  
             </nav>
           </div>
-
-        </Route>
-      </Switch>
+        </>
+      )}
     </nav>
-);
+  );
 }
 
 export default Navigation;

@@ -12,6 +12,7 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
 
@@ -85,6 +86,8 @@ function App() {
       .then((newUser) => {
         setLoggedIn(true);
         setCurrentUser(newUser);
+        localStorage.setItem('name', newUser.name);
+        localStorage.setItem('email', newUser.email);
         setProfileMessage('Профиль успешно обновлен!');
       })
       .catch((err) => {
@@ -106,28 +109,33 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
-        <Header />
+        <Header loggedIn={loggedIn} />
 
         <Switch>
             <Route exact path="/">
               <Main />
             </Route>
 
-            <Route path="/movies">
-              <Movies />
-            </Route>
+            <ProtectedRoute
+              path="/movies"
+              component={Movies}
+              loggedIn={loggedIn}
+            />
 
-            <Route path="/saved-movies">
-              <SavedMovies />
-            </Route>
+            <ProtectedRoute
+              path="/saved-movies"
+              component={SavedMovies}
+              loggedIn={loggedIn}
+            />
 
-            <Route path="/profile">
-              <Profile 
-                onUpdateUser={handleUpdateUser}
-                profileMessage={profileMessage}
-                onSignOut={handleUserSignOut}
-              />
-            </Route>
+            <ProtectedRoute
+              path="/profile"
+              component={Profile}
+              loggedIn={loggedIn}
+              onUpdateUser={handleUpdateUser}
+              profileMessage={profileMessage}
+              onSignOut={handleUserSignOut}
+            />
 
             <Route path="/signup">
                 <Register 
