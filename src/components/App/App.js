@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import Login from '../Auth/Login';
 import Movies from '../Movies/Movies';
 import Profile from '../Profile/Profile';
@@ -16,26 +16,38 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function App() {
 
   const history = useHistory();
+  const location = useLocation();
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
+  const[registerErrorMessage, setRegisterErrorMessage] = useState('');
+  const[loginErrorMessage, setLoginErrorMessage] = useState('');
+  const[profileMessage, setProfileMessage] = useState('');
+
   useEffect(() => {
     tokenCheck();
-  }, [])
+  }, [loggedIn])
 
-  function handleRegisterSubmit(name, email, password) {
-    mainApi.register(name, email, password)
+  function handleRegisterSubmit(userData) {
+    mainApi.register(userData)
       .then(() => {
-        handleLoginSubmit();
+        handleLoginSubmit({
+          email: userData.email,
+          password: userData.password
+        });
       })
       .catch((err) => {
-        
-      })
+        if (err === 'Ошибка: 409') {
+          setRegisterErrorMessage('Пользователь с таким email уже существует');
+        } else {
+          setRegisterErrorMessage('При регистрации пользователя произошла ошибка');
+        }
+      });
   }
 
-  function handleLoginSubmit(email, password) {
-    mainApi.authorize(email, password)
+  function handleLoginSubmit(user) {
+    mainApi.authorize(user)
       .then((res) => {
         if (res) {
           localStorage.setItem('jwt', res.token);
@@ -44,36 +56,50 @@ function App() {
         }
       })
       .catch((err) => {
-
+        if (err === 'Ошибка: 401') {
+          setLoginErrorMessage('Неправильный логин или пароль');
+        } else {
+          setLoginErrorMessage('При авторизации пользователя произошла ошибка');
+        }
       })
   }
 
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      setLoggedIn(true);
-      mainApi.getContent(jwt)
+    if (jwt) {;
+      mainApi.getUserInfo(jwt)
         .then((res) => {
           if (res) {
-            // setUserEmail(res.email);
-            history.push('/');
+            setLoggedIn(true);
+            setCurrentUser(res);
+            history.push(location);
           }
         })
         .catch((err) => console.log(err))
     }
   }
 
-  function handleUpdateUser({name, email}) {
-    mainApi.editProfile({name, email})
-      .then((res) => {
-        setCurrentUser(res);
+  function handleUpdateUser(user) {
+    const token = localStorage.getItem('jwt');
+    mainApi.editProfile(user, token)
+      .then((newUser) => {
+        setLoggedIn(true);
+        setCurrentUser(newUser);
+        setProfileMessage('Профиль успешно обновлен!');
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        if (err === 'Ошибка: 409') {
+          setProfileMessage('Пользователь с таким email уже существует');
+        } else {
+          setProfileMessage('При обновлении профиля произошла ошибка');
+        }
+      })
   }
 
   function handleUserSignOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
+    setCurrentUser({});
     history.push('/');
   }
 
@@ -85,40 +111,36 @@ function App() {
         <Switch>
             <Route exact path="/">
               <Main />
-              <Footer />
             </Route>
 
             <Route path="/movies">
               <Movies />
-              <Footer />
             </Route>
 
             <Route path="/saved-movies">
               <SavedMovies />
-              <Footer />
             </Route>
 
             <Route path="/profile">
               <Profile 
                 onUpdateUser={handleUpdateUser}
+                profileMessage={profileMessage}
                 onSignOut={handleUserSignOut}
               />
             </Route>
 
             <Route path="/signup">
-              {loggedIn ? <Redirect to="/" /> :
                 <Register 
                   onRegister={handleRegisterSubmit}
+                  registerErrorMessage={registerErrorMessage}
                 />
-              }  
             </Route>
 
             <Route path="/signin">
-              {loggedIn ? <Redirect to="/" /> :
                 <Login 
                   onLogin={handleLoginSubmit}
+                  loginErrorMessage={loginErrorMessage}
                 /> 
-              }  
             </Route>
 
             <Route path="*">
@@ -126,6 +148,10 @@ function App() {
             </Route>
 
           </Switch>
+
+          <Route exact path={["/", "/movies", "/saved-movies"]}>
+            <Footer />
+          </Route>
 
       </div>
     </CurrentUserContext.Provider>

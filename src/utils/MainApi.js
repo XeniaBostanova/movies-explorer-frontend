@@ -18,7 +18,7 @@ class MainApi {
     return res.json();
   }
 
-  register = (name, email, password) => {
+  register = ({name, email, password}) => {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {
@@ -30,7 +30,7 @@ class MainApi {
     .then(this._getResponseData)
   }
   
-  authorize = (email, password) => {
+  authorize = ({email, password}) => {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
@@ -42,14 +42,10 @@ class MainApi {
     .then(this._getResponseData)
   }
   
-  getContent = () => {
+  getUserInfo = () => {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
-      }
+      headers: this._headers,
     })
     .then(this._getResponseData)
   } 

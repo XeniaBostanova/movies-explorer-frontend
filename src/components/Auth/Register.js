@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Auth.css';
 
-function Register({isLoading, onRegister, message}) {
+function Register({ onRegister, registerErrorMessage }) {
   const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
-  const disabled = !isValid || isLoading;
 
   useEffect(() => {
     resetForm({}, {}, false);
@@ -57,8 +56,8 @@ function Register({isLoading, onRegister, message}) {
             className="auth__form-item auth__form-item_type_password"
             minLength="8" maxLength="50" required />
           <span className="auth__input-error">{errors.password || ''}</span>
-          <span className="auth__message-error">{message}</span>
-          <button disabled={disabled} type="submit" className="auth__button">Зарегистрироваться</button>
+          <span className="auth__message-error">{registerErrorMessage}</span>
+          <button disabled={!isValid} type="submit" className="auth__button auth__button_error">Зарегистрироваться</button>
         </div>
       </form>
       <p className="auth__subtitle">Уже зарегистрированы? 
