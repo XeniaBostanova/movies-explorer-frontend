@@ -1,4 +1,4 @@
-
+import {MAIN_URL} from './constants';
 class MainApi {
   constructor({baseUrl}) {
     this._baseUrl = baseUrl;
@@ -85,5 +85,5 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-  baseUrl: 'https://api.diploma.movies.nomoredomains.xyz',
+  baseUrl: `${MAIN_URL}`,
 });

@@ -1,3 +1,5 @@
+import { MOVIES_URL } from './constants';
+
 class MoviesApi {
   constructor({baseUrl}) {
     this._baseUrl = baseUrl;
@@ -18,7 +20,7 @@ class MoviesApi {
   }
 
   getMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
+    return fetch(`${this._baseUrl}/beatfilm-movies`, {
       headers: this._headers,
     })
       .then(this._getResponseData)
@@ -26,5 +28,5 @@ class MoviesApi {
 }
 
 export const moviesApi = new MoviesApi({
-  baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+  baseUrl: `${MOVIES_URL}`,
 });

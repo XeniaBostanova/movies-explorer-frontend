@@ -1,8 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './MoviesCard.css';
+import {MOVIES_URL} from '../../utils/constants';
 
 function MoviesCard({movie}) {
+  const onClickUrl = (url) => {
+    return () => window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
   return (
     <li className="movie">
       <div className="movie__main-container">
@@ -21,7 +26,7 @@ function MoviesCard({movie}) {
         </Switch>
         
       </div>
-      <img src={movie.image} alt={movie.nameRU} className="movie__image" />
+      <img src={`movie.${MOVIES_URL}image.url`} alt={movie.nameRU} onClick={onClickUrl(`${movie.trailerLink}`)} className="movie__image" />
     </li>
   )
 }

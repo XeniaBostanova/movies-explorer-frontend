@@ -8,48 +8,61 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
   const location = useLocation();
 
   const currentUser = useContext(CurrentUserContext);
-  const { values, setValues, handleChange, errors, isValid } = useFormWithValidation();
+  const { values, setValues, errors, setErrors, handleChange, isValid, setIsValid } = useFormWithValidation();
 
-  // const [disabled, setDisabled] = useState(true);
   const [profileMessageText, setProfileMessageText] = useState('');
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (values.name === currentUser.name || values.email === currentUser.email) {
+      setIsValid(false);
+    } else {
+      onUpdateUser({
+        name: values.name,
+        email: values.email,
+      });
+    }
+  }
+
+  const handleChangeName = (e) => {
+    if (e.target.value === currentUser.name || e.target.value === currentUser.email) {
+      setIsValid(false);
+      setErrors({
+        errors: errors.name, 
+        [e.target.name]: 'Имя должно отличаться от текущего'
+      })
+    } else {
+      handleChange(e);
+    }
+  };
+
+  const handleChangeEmail = (e) => {
+    if (e.target.value === currentUser.name || e.target.value === currentUser.email) {
+      setIsValid(false);
+      setErrors({
+        errors: errors.name, 
+        [e.target.name]: 'Email должен отличаться от текущего'
+      });
+    } else {
+      handleChange(e);
+    }
+  };
+
+  useEffect(() => {
+    setProfileMessageText(profileMessage);
+  }, [profileMessage]);
+
+  useEffect(() => {
+    setProfileMessageText('');
+  }, [location]);
 
   useEffect(() => {
     setValues({
       name: currentUser.name,
       email: currentUser.email
     });
-    setProfileMessageText(profileMessage);
+    setIsValid(false);
   }, [currentUser, setValues])
-
-  useEffect(() => {
-    setProfileMessageText('');
-  }, [location]);
-
-  // function handleUserName () {
-  //   handleChange();
-  //   if (values !== currentUser.name && isValid) {
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // }
-
-  // function handleUserEmail () {
-  //   handleChange();
-  //   if (values !== currentUser.email && isValid) {
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onUpdateUser({
-      name: values.name,
-      email: values.email,
-    });
-  }
 
   return(
     <section className="profile">
@@ -62,7 +75,7 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
             type="text"
             name="name"
             value={values.name || ''}
-            onChange={handleChange}
+            onChange={handleChangeName}
             pattern="^[а-яА-Яa-zA-ZЁё\-\s]*$"
             className="profile__form-item profile__form-item_type_name"
             minLength="2" maxLength="40" required  />
@@ -75,7 +88,7 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
             type="email"
             name="email"
             value={values.email || ''}
-            onChange={handleChange}
+            onChange={handleChangeEmail}
             pattern = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
             className="profile__form-item profile__form-item_type_email"
             required />

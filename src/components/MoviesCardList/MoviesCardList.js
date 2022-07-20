@@ -1,9 +1,8 @@
 import React from 'react';
 import './MoviesCardList.css';
-import {movies} from '../../utils/movies'
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+function MoviesCardList({movies}) {
   return (
     <section className="movies-container">
       <ul className="movies-list">
