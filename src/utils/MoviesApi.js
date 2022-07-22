@@ -5,13 +5,6 @@ class MoviesApi {
     this._baseUrl = baseUrl;
   }
 
-  get _headers() {
-    return {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
-    }
-  }
-
   _getResponseData(res) {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
@@ -21,7 +14,10 @@ class MoviesApi {
 
   getMovies() {
     return fetch(`${this._baseUrl}/beatfilm-movies`, {
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
     })
       .then(this._getResponseData)
   }

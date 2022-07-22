@@ -12,18 +12,6 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
 
   const [profileMessageText, setProfileMessageText] = useState('');
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (values.name === currentUser.name || values.email === currentUser.email) {
-      setIsValid(false);
-    } else {
-      onUpdateUser({
-        name: values.name,
-        email: values.email,
-      });
-    }
-  }
-
   const handleChangeName = (e) => {
     if (e.target.value === currentUser.name || e.target.value === currentUser.email) {
       setIsValid(false);
@@ -57,12 +45,23 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
   }, [location]);
 
   useEffect(() => {
-    setValues({
-      name: currentUser.name,
-      email: currentUser.email
-    });
-    setIsValid(false);
-  }, [currentUser, setValues])
+      setValues({
+        name: currentUser.name,
+        email: currentUser.email
+      });
+  }, [currentUser, setValues]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (values.name === currentUser.name || values.email === currentUser.email) {
+      setIsValid(false);
+    } else {
+      onUpdateUser({
+        name: values.name,
+        email: values.email,
+      });
+    }
+  }
 
   return(
     <section className="profile">
