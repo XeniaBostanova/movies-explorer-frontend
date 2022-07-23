@@ -17,8 +17,7 @@ function MoviesCardList({movies, savedMovies, onSaveMovie, onDeleteMovie}) {
             />
           ))
         }
-      </ul>  
-      <button className="movies-list__button" type="button">Ещё</button>
+      </ul>
     </section>
   )
 }

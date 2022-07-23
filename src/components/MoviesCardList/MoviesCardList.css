@@ -50,29 +50,3 @@
     grid-row-gap: 16px;
   }
 }
-
-.movies-list__button {
-  margin-top: 80px;
-  width: 320px;
-  height: 36px;
-  background-color: #2f2f2f;
-  color: #fff;
-  font-size: 12px;
-  line-height: 15px;
-  font-weight: 500;
-  border: none;
-  border-radius: 6px;
-  align-self: center;
-  cursor: pointer;
-  transition: .5s;
-}
-
-.movies-list__button:hover {
-  background-color: #3DDC84;
-}
-
-@media screen and (max-width: 425px) {
-  .movies-list__button {
-    width: 240px;
-  }
-}

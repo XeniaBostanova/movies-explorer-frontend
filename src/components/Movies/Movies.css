@@ -2,3 +2,54 @@
   max-width: 1280px;
   margin: 0 auto;
 }
+
+.movies__span {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.movies__span-item {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: center;
+}
+
+.movies__btn-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movies__button {
+  width: 320px;
+  height: 36px;
+  background-color: #2f2f2f;
+  color: #fff;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  align-self: center;
+  cursor: pointer;
+  transition: .5s;
+  visibility: visible;
+}
+
+.movies__button:hover {
+  opacity: .6;;
+}
+
+@media screen and (max-width: 425px) {
+  .movies__button {
+    width: 240px;
+  }
+}
+
+.movies__button_hidden {
+  visibility: hidden;
+  opacity: 0;
+}

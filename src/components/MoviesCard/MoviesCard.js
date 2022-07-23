@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import './MoviesCard.css';
 import {MOVIES_URL} from '../../utils/constants';
 
-function MoviesCard({movie,savedMovies, onSaveMovie, onDeleteMovie}) {
+function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie}) {
   const [isActiveSaveButton, setIsActiveSaveButton] = useState(false);
 
   const hours = Math.floor(movie.duration / 60);
@@ -11,18 +11,19 @@ function MoviesCard({movie,savedMovies, onSaveMovie, onDeleteMovie}) {
 
   const movieSaveButtonClassName = `movie__save-button ${isActiveSaveButton && 'movie__save-button_active'}`;
 
-  const findSavedMovie = savedMovies.find((item) => item.movieId === movie.movieId);
-  const activateSaveButton = useCallback(() => {
-    if (findSavedMovie) {
-      setIsActiveSaveButton(true);
-    } else {
-      setIsActiveSaveButton(false);
-    }
-  }, [movie.movieId, savedMovies]);
+  // const findSavedMovie = savedMovies.find((item) => item.movieId === movie.movieId);
 
-  useEffect(() => {
-    activateSaveButton();
-  }, [activateSaveButton]);
+  // const activateSaveButton = useCallback(() => {
+  //   if (findSavedMovie) {
+  //     setIsActiveSaveButton(true);
+  //   } else {
+  //     setIsActiveSaveButton(false);
+  //   }
+  // }, [movie.movieId, savedMovies]);
+
+  // useEffect(() => {
+  //   activateSaveButton();
+  // }, [activateSaveButton]);
 
   function onClickUrl(url) {
     return () => window.open(url, '_blank', 'noopener,noreferrer');
@@ -45,7 +46,7 @@ function MoviesCard({movie,savedMovies, onSaveMovie, onDeleteMovie}) {
       });
       setIsActiveSaveButton(true);
     } else {
-      onDeleteMovie(findSavedMovie);
+      handleDeleteMovie(movie); // (findSavedMovie)
       setIsActiveSaveButton(false);
     }
   }
