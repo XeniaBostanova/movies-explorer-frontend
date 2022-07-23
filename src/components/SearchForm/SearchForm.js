@@ -14,23 +14,26 @@ function SearchForm({onSearch}) {
   const location = useLocation();
 
   useEffect(() => {
-    const value = localStorage.getItem('checkboxStatus');
-      if (location.pathname === '/movies') {
-        if (localStorage.getItem('request')) {
-          setRequest(localStorage.getItem('request'));
-        } 
-        if (JSON.parse(value) === true) {
-          setCheckboxStatus(true);
-        } else {
-          setCheckboxStatus(false);
-        }
-      }  
-    }, [location.pathname])
-
-  useEffect(() => {
-    const disabled = !isValid
+    const disabled = !isValid;
     setDisabled(disabled);
   }, [isValid]);
+
+  useEffect(() => {
+    if (location.pathname === '/movies') {
+      const checkbox = localStorage.getItem('checkboxStatus');
+      const search = localStorage.getItem('request');
+
+      if (search) {
+        setRequest(search);
+        setDisabled(!disabled);
+      } 
+      if (JSON.parse(checkbox) === true) {
+        setCheckboxStatus(true);
+      } else {
+        setCheckboxStatus(false);
+      }
+    }  
+  }, [location.pathname]);
 
   function handleChangeRequest(e) {
     handleChange(e);
@@ -59,20 +62,21 @@ function SearchForm({onSearch}) {
             <input 
               name="request"
               type="text"
-              value={values.request || ''}
+              value={request || ''}
               className="search__input"
               placeholder="Фильм"
               onChange={handleChangeRequest}
               required/>
             <button disabled={disabled} type="submit" className="search__button">Найти</button>
           </form>
-          <span className="search__input-error">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
+          <span className="search__input-error_mobile">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
         </div>  
         <FilterCheckbox 
           checkboxStatus={checkboxStatus}
           onChangeCheckbox={handleChangeCheckbox}
         />
       </div>
+      <span className="search__input-error_desktop">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
     </div>
   )
 }

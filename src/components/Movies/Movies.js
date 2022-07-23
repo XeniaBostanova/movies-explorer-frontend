@@ -4,6 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 import {moviesApi} from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
+import moviesFilter from '../../utils/MoviesFilter';
 
 function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
   const [initialMovies, setInitialMovies] = useState([]);
@@ -24,8 +25,8 @@ function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
   const currentViewport = document.documentElement.clientWidth;
 
   useEffect(() => {
-    if (localStorage.getItem('requestResult')) {
-      const initialSearch = JSON.parse(localStorage.getItem('requestResult'));
+    if (localStorage.getItem('moviesStorage')) {
+      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
       const searchResult = moviesFilter(initialSearch, request, checkboxStatus);
 
       setFilteredMovies(searchResult);
@@ -63,30 +64,16 @@ function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
       setInitialMovies(initialMoviesInLocalStorage);
     }
   }
-
-  function moviesFilter(movies, request, checkboxStatus) {
-    let moviesFilter = movies;
-    let result;
-  
-    if (checkboxStatus) {
-      moviesFilter = moviesFilter.filter((movie) => movie.duration <= 40);
-    }
-  
-    result = moviesFilter.filter((movie) => {
-      return movie.nameRU.toLowerCase().indexOf(request.toLowerCase()) !== -1;
-    })
-    return result;
-  }
   
   useEffect(() => {
     if (initialMovies.length > 0) {
-      const requestResult = moviesFilter(initialMovies, request, checkboxStatus);
+      const moviesStorage = moviesFilter(initialMovies, request, checkboxStatus);
       
-      localStorage.setItem('requestResult', JSON.stringify(requestResult));
+      localStorage.setItem('moviesStorage', JSON.stringify(moviesStorage));
       localStorage.setItem('request', request);
       localStorage.setItem('checkboxStatus', checkboxStatus);
 
-      setFilteredMovies(requestResult);
+      setFilteredMovies(moviesStorage);
       setIsSearchDone(true);
     }
   }, [initialMovies, request, checkboxStatus]);
