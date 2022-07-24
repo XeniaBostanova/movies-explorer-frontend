@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
-import {moviesApi} from '../../utils/MoviesApi';
+import { moviesApi } from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
 import moviesFilter from '../../utils/MoviesFilter';
 
@@ -39,7 +39,7 @@ function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
     setTimeout(() => setPreloader(false), 700);
   }
 
-  const handleSearchMovie = (request, checkboxStatus) => {
+  function handleSearchMovie(request, checkboxStatus) {
     launchPreloader();
     setRenderedMovies([]);
     setRequest(request);
@@ -50,9 +50,9 @@ function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
     if (!initialMoviesInLocalStorage) {
       setPreloader(true);
       moviesApi.getMovies()
-        .then((data) => {
-          setInitialMovies(data);
-          localStorage.setItem('initialMovies', JSON.stringify(data));
+        .then((moviesData) => {
+          setInitialMovies(moviesData);
+          localStorage.setItem('initialMovies', JSON.stringify(moviesData));
         })
         .catch(() => {
           setSearchStatus('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
@@ -118,7 +118,9 @@ function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
         onSearch={handleSearchMovie}
       />
        {preloader 
-        ? <Preloader /> 
+        ? <div className="movies__preloader-container">
+            <Preloader /> 
+          </div>
         : isSearchDone
           ? renderedMovies.length > 0
             ? <MoviesCardList 
@@ -137,10 +139,15 @@ function Movies({savedMovies, onSaveMovie, onDeleteMovie}) {
               </div>
             )
           : ("")
-      }
-      <div className="movies__btn-section">
-        <button onClick={renderMovies} className={moreButtonClassName} type="button">Ещё</button>
-      </div>
+        }
+        {!preloader ? isSearchDone
+          ? <div className="movies__btn-section">
+              <button onClick={renderMovies} className={moreButtonClassName} type="button">Ещё</button>
+            </div>
+          : ("")
+        : ("")
+        }
+      
     </section>
   )
 }

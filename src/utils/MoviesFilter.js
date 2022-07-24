@@ -7,7 +7,7 @@ function MoviesFilter(movies, request, checkboxStatus) {
   }
 
   result = moviesFilter.filter((movie) => {
-    return movie.nameRU.toLowerCase().indexOf(request.toLowerCase()) !== -1;
+    return movie.nameRU.toLowerCase().includes(request.toLowerCase());
   })
   return result;
 }

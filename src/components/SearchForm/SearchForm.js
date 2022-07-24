@@ -5,7 +5,7 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
 function SearchForm({onSearch}) {
-  const { values, handleChange, isValid } = useFormWithValidation();
+  const { handleChange, isValid } = useFormWithValidation();
 
   const [request, setRequest] = useState('');
   const [checkboxStatus, setCheckboxStatus] = useState(false);
@@ -47,7 +47,7 @@ function SearchForm({onSearch}) {
 
   function toggleCheckbox(checkboxStatus) {
     setCheckboxStatus(checkboxStatus);
-    onSearch(values.request, checkboxStatus);
+    onSearch(request, checkboxStatus);
   }
 
   function handleChangeCheckbox(e) {

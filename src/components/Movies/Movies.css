@@ -3,6 +3,11 @@
   margin: 0 auto;
 }
 
+.movies__preloader-container {
+  display: flex;
+  justify-content: center;
+}
+
 .movies__span {
   margin-top: 20px;
   display: flex;
