@@ -22,13 +22,24 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-  const[registerErrorMessage, setRegisterErrorMessage] = useState('');
-  const[loginErrorMessage, setLoginErrorMessage] = useState('');
-  const[profileMessage, setProfileMessage] = useState('');
+  const [registerErrorMessage, setRegisterErrorMessage] = useState('');
+  const [loginErrorMessage, setLoginErrorMessage] = useState('');
+  const [profileMessage, setProfileMessage] = useState('');
+
+  const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
     tokenCheck();
   }, [loggedIn])
+
+  useEffect(() => {
+    mainApi.getSavedMovies()
+      .then((savedMoviesData) => {
+        localStorage.setItem('savedMoviesStorage', JSON.stringify(savedMoviesData));
+        setSavedMovies(JSON.parse(localStorage.getItem('savedMoviesStorage')));
+      })
+      .catch((err) => console.log(err));
+  }, [currentUser])
 
   function handleRegisterSubmit(userData) {
     mainApi.register(userData)
@@ -99,6 +110,22 @@ function App() {
       })
   }
 
+  function handleSaveMovie(data) {
+    mainApi.saveMovie(data)
+      .then((newMovie) => {
+        setSavedMovies((savedMovies) => [newMovie, ...savedMovies]);
+      })
+      .catch((err) => console.log(err))
+  }
+
+  function handleDeleteMovie(movie) {
+    mainApi.deleteMovie(movie._id)
+      .then(() => {
+        setSavedMovies((movies) => movies.filter((m) => m._id !== movie._id));
+      })
+      .catch((err) => console.log(err))
+  }
+
   function handleUserSignOut() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
@@ -120,12 +147,17 @@ function App() {
               path="/movies"
               component={Movies}
               loggedIn={loggedIn}
+              savedMovies={savedMovies}
+              onSaveMovie={handleSaveMovie}
+              onDeleteMovie={handleDeleteMovie}
             />
 
             <ProtectedRoute
               path="/saved-movies"
               component={SavedMovies}
               loggedIn={loggedIn}
+              savedMovies={savedMovies}
+              onDeleteMovie={handleDeleteMovie}
             />
 
             <ProtectedRoute

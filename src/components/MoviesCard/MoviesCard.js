@@ -1,36 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './MoviesCard.css';
 import {MOVIES_URL} from '../../utils/constants';
 
 function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie}) {
-  const [isActiveSaveButton, setIsActiveSaveButton] = useState(false);
-
   const hours = Math.floor(movie.duration / 60);
   const minutes = movie.duration % 60;
 
-  const movieSaveButtonClassName = `movie__save-button ${isActiveSaveButton && 'movie__save-button_active'}`;
+  const savedMovie = savedMovies.some((m) => m.movieId === movie.id);
 
-  // const findSavedMovie = savedMovies.find((item) => item.movieId === movie.movieId);
-
-  // const activateSaveButton = useCallback(() => {
-  //   if (findSavedMovie) {
-  //     setIsActiveSaveButton(true);
-  //   } else {
-  //     setIsActiveSaveButton(false);
-  //   }
-  // }, [movie.movieId, savedMovies]);
-
-  // useEffect(() => {
-  //   activateSaveButton();
-  // }, [activateSaveButton]);
+  const movieSaveButtonClassName = !savedMovie ? `movie__save-button` : `movie__save-button movie__save-button_active`;
 
   function onClickUrl(url) {
     return () => window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   function handleSaveMovie() {
-    if (!isActiveSaveButton) {
+    if (!savedMovie) {
       onSaveMovie({
         country: movie.country,
         director: movie.director,
@@ -44,10 +30,8 @@ function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie}) {
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
       });
-      setIsActiveSaveButton(true);
     } else {
-      handleDeleteMovie(movie); // (findSavedMovie)
-      setIsActiveSaveButton(false);
+      onDeleteMovie(savedMovies.filter((m) => m.movieId === movie.id)[0]);
     }
   }
 
