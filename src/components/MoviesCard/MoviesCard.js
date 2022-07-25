@@ -7,7 +7,7 @@ function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie}) {
   const hours = Math.floor(movie.duration / 60);
   const minutes = movie.duration % 60;
 
-  const savedMovie = savedMovies.some((m) => m.movieId === movie.id);
+  const savedMovie = savedMovies.find((m) => m.movieId === movie.id);
 
   const movieSaveButtonClassName = !savedMovie ? `movie__save-button` : `movie__save-button movie__save-button_active`;
 

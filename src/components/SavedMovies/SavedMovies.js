@@ -14,8 +14,8 @@ function SavedMovies({savedMovies, onDeleteMovie}) {
 
   function handleSearchSavedMovie(request, checkboxStatus) {
     launchPreloader();
-    const filteredMoviesStorage = moviesFilter(filteredMovies, request, checkboxStatus);
-    setFilteredMovies(filteredMoviesStorage);
+    const searchResult = moviesFilter(savedMovies, request, checkboxStatus);
+    setFilteredMovies(searchResult);
     setRequest(request);
     setCheckboxStatus(checkboxStatus);
     setIsSearchDone(true);
@@ -46,6 +46,7 @@ function SavedMovies({savedMovies, onDeleteMovie}) {
           ? filteredMovies.length > 0
             ? <MoviesCardList 
                 movies={filteredMovies}
+                savedMovies={savedMovies}
                 onDeleteMovie={onDeleteMovie}
               />
             : 
@@ -54,6 +55,7 @@ function SavedMovies({savedMovies, onDeleteMovie}) {
               </div>
           : <MoviesCardList 
               movies={savedMovies}
+              savedMovies={savedMovies}
               onDeleteMovie={onDeleteMovie}
             />
       }

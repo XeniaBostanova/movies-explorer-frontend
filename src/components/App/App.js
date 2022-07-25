@@ -110,10 +110,10 @@ function App() {
       })
   }
 
-  function handleSaveMovie(data) {
-    mainApi.saveMovie(data)
+  function handleSaveMovie(movie) {
+    mainApi.saveMovie(movie)
       .then((newMovie) => {
-        setSavedMovies((savedMovies) => [newMovie, ...savedMovies]);
+        setSavedMovies((movies) => [newMovie, ...movies]);
       })
       .catch((err) => console.log(err))
   }
@@ -128,6 +128,10 @@ function App() {
 
   function handleUserSignOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('request');
+    localStorage.removeItem('checkboxStatus');
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('moviesStorage');
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/');
