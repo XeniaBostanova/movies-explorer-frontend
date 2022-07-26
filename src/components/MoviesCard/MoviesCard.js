@@ -18,7 +18,7 @@ function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie}) {
   function handleSaveMovie() {
     if (!savedMovie) {
       onSaveMovie({
-        country: movie.country,
+        country: String(movie.country),
         director: movie.director,
         duration: movie.duration,
         year: movie.year,
