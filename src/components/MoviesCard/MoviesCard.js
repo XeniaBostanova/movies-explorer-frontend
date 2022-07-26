@@ -62,10 +62,28 @@ function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie}) {
               className="movie__save-button movie__delete-button">
             </button>
           </Route>
-        </Switch>
-        
+        </Switch>     
       </div>
-      <img src={`${MOVIES_URL}${movie.image.url}`} alt={movie.nameRU} onClick={onClickUrl(`${movie.trailerLink}`)} className="movie__image" />
+      
+      <Switch>
+        <Route path='/movies'> 
+          <img 
+            src={`${MOVIES_URL}${movie.image.url}`} 
+            alt={movie.nameRU} 
+            onClick={onClickUrl(`${movie.trailerLink}`)} 
+            className="movie__image" 
+          />
+        </Route>
+      
+        <Route path='/saved-movies'>
+          <img
+            src={movie.image} 
+            alt={movie.nameRU} 
+            onClick={onClickUrl(`${movie.trailerLink}`)} 
+            className="movie__image" 
+          />
+        </Route>
+      </Switch>
     </li>
   )
 }
