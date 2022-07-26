@@ -9,12 +9,12 @@ function SavedMovies({savedMovies, onDeleteMovie}) {
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [request, setRequest] = useState('');
   const [checkboxStatus, setCheckboxStatus] = useState(false);
-  
   const [preloader, setPreloader] = useState(false);
   const [isSearchDone, setIsSearchDone] = useState(false);
 
   function handleSearchSavedMovie(request, checkboxStatus) {
     launchPreloader();
+    
     const searchResult = moviesFilter(savedMovies, request, checkboxStatus);
     setFilteredSavedMovies(searchResult);
     setRequest(request);
