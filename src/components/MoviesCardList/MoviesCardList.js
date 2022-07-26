@@ -2,7 +2,19 @@ import React from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({movies, savedMovies, onSaveMovie, onDeleteMovie}) {
+function MoviesCardList({
+  movies,
+  savedMovies,
+  onSaveMovie,
+  onDeleteMovie,
+  preloader,
+  isSearchDone,
+  onRenderMovies,
+  moreButtonVisibility,
+  }) {
+
+  const moreButtonClassName = moreButtonVisibility ? `movies-list__button` : `movies-list__more-button movies-list__button_hidden`;
+
   return (
     <section className="movies-container">
       <ul className="movies-list">
@@ -18,6 +30,13 @@ function MoviesCardList({movies, savedMovies, onSaveMovie, onDeleteMovie}) {
           ))
         }
       </ul>
+      {!preloader ? isSearchDone
+          ? <div className="movies-list__btn-section">
+              <button onClick={onRenderMovies} className={moreButtonClassName} type="button">Ещё</button>
+            </div>
+          : ("")
+        : ("")
+        }
     </section>
   )
 }

@@ -4,8 +4,17 @@ import SearchForm from '../SearchForm/SearchForm';
 import './Movies.css';
 import Preloader from '../Preloader/Preloader';
 
-function Movies({onSearch, preloader, isSearchDone, searchStatus, renderedMovies, savedMovies, onSaveMovie, onDeleteMovie, moreButtonVisibility, onRenderMovies}) {
-  const moreButtonClassName = moreButtonVisibility ? `movies__button` : `movies__more-button movies__button_hidden`;
+function Movies({
+  onSearch,
+  preloader,
+  isSearchDone,
+  searchStatus,
+  renderedMovies,
+  savedMovies,
+  onSaveMovie,
+  onDeleteMovie,
+  moreButtonVisibility,
+  onRenderMovies}) {
 
   return (
     <section className="movies">
@@ -23,6 +32,10 @@ function Movies({onSearch, preloader, isSearchDone, searchStatus, renderedMovies
               savedMovies={savedMovies}
               onSaveMovie={onSaveMovie}
               onDeleteMovie={onDeleteMovie}
+              preloader={preloader}
+              isSearchDone={isSearchDone}
+              onRenderMovies={onRenderMovies}
+              moreButtonVisibility={moreButtonVisibility}
               />
             : (!preloader ?
               <div className="movies__span">
@@ -34,13 +47,6 @@ function Movies({onSearch, preloader, isSearchDone, searchStatus, renderedMovies
               </div>
             )
           : ("")
-        }
-        {!preloader ? isSearchDone
-          ? <div className="movies__btn-section">
-              <button onClick={onRenderMovies} className={moreButtonClassName} type="button">Ещё</button>
-            </div>
-          : ("")
-        : ("")
         }
       
     </section>

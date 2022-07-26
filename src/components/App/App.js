@@ -57,7 +57,7 @@ function App() {
       setFilteredMovies(searchResult);
       setIsSearchDone(true);
     }
-  }, [])
+  }, [currentUser])
 
   useEffect(() => {
     mainApi.getSavedMovies()
@@ -66,7 +66,7 @@ function App() {
         setSavedMovies(JSON.parse(localStorage.getItem('savedMoviesStorage')));
       })
       .catch((err) => console.log(err));
-  }, [currentUser])
+  }, [loggedIn])
 
   //Функционал Регистрация/Логин/Профиль
 
@@ -185,32 +185,6 @@ function App() {
     }
   }, [initialMovies, request, checkboxStatus]);
 
-  //Изменение ширины экрана и показ кол-ва карточек
-
-  useEffect(() => {
-    if (currentViewport <= 480) {
-      setFirstResults(5);
-      setMoreResults(2);
-    } else if (currentViewport <= 768) {
-      setFirstResults(8);
-      setMoreResults(2);
-    } else if (currentViewport > 768) {
-      setFirstResults(12);
-      setMoreResults(8);
-    }
-  }, [currentViewport]);
-  
-  useEffect(() => {
-    if (filteredMovies.length > 0) {
-      if (filteredMovies.length > firstResults) {  
-        setRenderedMovies(filteredMovies.slice(0, firstResults));
-        setMoreButtonVisibility(true);
-      } else {
-        setRenderedMovies(filteredMovies);
-      }
-    }
-  }, [filteredMovies, firstResults]);
-
   function renderMovies() {
     setRenderedMovies((state) => filteredMovies.slice(0, state.length + moreResults));
   }
@@ -220,6 +194,8 @@ function App() {
       setMoreButtonVisibility(false);
     }
   }, [renderedMovies, filteredMovies]);
+
+  //Функционал сохранение/удаление
 
   function handleSaveMovie(movie) {
     mainApi.saveMovie(movie)
@@ -237,12 +213,41 @@ function App() {
       .catch((err) => console.log(err))
   }
 
+  //Изменение ширины экрана и показ кол-ва карточек
+
+  useEffect(() => {
+    if (currentViewport <= 480) {
+      setFirstResults(5);
+      setMoreResults(2);
+    } else if (currentViewport <= 1024) {
+      setFirstResults(8);
+      setMoreResults(2);
+    } else if (currentViewport > 1024) {
+      setFirstResults(12);
+      setMoreResults(3);
+    }
+  }, [currentViewport]);
+    
+  useEffect(() => {
+    if (filteredMovies.length > 0) {
+      if (filteredMovies.length > firstResults) {  
+        setRenderedMovies(filteredMovies.slice(0, firstResults));
+        setMoreButtonVisibility(true);
+      } else {
+        setRenderedMovies(filteredMovies);
+      }
+    }
+  }, [filteredMovies, firstResults]);
+
+  //Выход из системы
+
   function handleUserSignOut() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('request');
     localStorage.removeItem('checkboxStatus');
     localStorage.removeItem('initialMovies');
     localStorage.removeItem('moviesStorage');
+    localStorage.removeItem('savedMoviesStorage');
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/');

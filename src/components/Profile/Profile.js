@@ -53,14 +53,10 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (values.name === currentUser.name || values.email === currentUser.email) {
-      setIsValid(false);
-    } else {
-      onUpdateUser({
-        name: values.name,
-        email: values.email,
-      });
-    }
+    onUpdateUser({
+      name: values.name,
+       email: values.email,
+    });
   }
 
   return(
