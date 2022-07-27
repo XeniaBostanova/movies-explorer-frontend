@@ -4,7 +4,7 @@ import logo from '../../images/logo.svg';
 import Navigation from '../Navigation/Navigation';
 import './Header.css';
 
-function Header() {
+function Header({loggedIn}) {
   return (
     
     <Switch>
@@ -13,7 +13,7 @@ function Header() {
           <Link to="/" className="header__logo">
             <img src={logo} alt="Логотип" />
           </Link>
-          <Navigation />
+          <Navigation loggedIn={loggedIn}/>
         </header>  
       </Route>
     
@@ -22,7 +22,7 @@ function Header() {
           <Link to="/" className="header__logo">
             <img src={logo} alt="Логотип" />
           </Link>
-          <Navigation />
+          <Navigation loggedIn={loggedIn} />
         </header>
       </Route>
     </Switch>
