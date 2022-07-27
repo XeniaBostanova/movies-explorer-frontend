@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation, Redirect } from 'react-router-dom';
 import Login from '../Auth/Login';
 import Movies from '../Movies/Movies';
 import Profile from '../Profile/Profile';
@@ -15,6 +15,8 @@ import { moviesApi } from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import moviesFilter from '../../utils/MoviesFilter'
+import { DESKTOP_MORE, DESKTOP_RESULT, DESKTOP_WIDTH, MOBILE_MORE, MOBILE_RESULT, MOBILE_WIDTH, TABLET_MORE, TABLET_RESULT } from '../../utils/constants';
+import ErrorPopup from '../ErrorPopup/ErrorPopup';
 
 function App() {
 
@@ -45,6 +47,8 @@ function App() {
 
   const [savedMovies, setSavedMovies] = useState([]);
 
+  const [errorPopupIsOpen, setErrorPopupIsOpen] = useState(false);
+
   useEffect(() => {
     tokenCheck();
   }, [loggedIn])
@@ -60,12 +64,13 @@ function App() {
   }, [currentUser])
 
   useEffect(() => {
-    mainApi.getSavedMovies()
+    if (loggedIn) {
+      mainApi.getSavedMovies()
       .then((savedMoviesData) => {
-        localStorage.setItem('savedMoviesStorage', JSON.stringify(savedMoviesData));
-        setSavedMovies(JSON.parse(localStorage.getItem('savedMoviesStorage')));
+        setSavedMovies(savedMoviesData.filter((m) => m.owner === currentUser._id));
       })
-      .catch((err) => console.log(err));
+      .catch(() => setErrorPopupIsOpen(true));
+    }
   }, [loggedIn])
 
   //Функционал Регистрация/Логин/Профиль
@@ -116,7 +121,7 @@ function App() {
             history.push(location);
           }
         })
-        .catch((err) => console.log(err))
+        .catch(() => setErrorPopupIsOpen(true))
     }
   }
 
@@ -202,7 +207,7 @@ function App() {
       .then((newMovie) => {
         setSavedMovies((movies) => [newMovie, ...movies]);
       })
-      .catch((err) => console.log(err))
+      .catch(() => setErrorPopupIsOpen(true))
   }
 
   function handleDeleteMovie(movie) {
@@ -210,21 +215,21 @@ function App() {
       .then(() => {
         setSavedMovies((movies) => movies.filter((m) => m._id !== movie._id));
       })
-      .catch((err) => console.log(err))
+      .catch(() => setErrorPopupIsOpen(true))
   }
 
   //Изменение ширины экрана и показ кол-ва карточек
 
   useEffect(() => {
-    if (currentViewport <= 480) {
-      setFirstResults(5);
-      setMoreResults(2);
-    } else if (currentViewport <= 1024) {
-      setFirstResults(8);
-      setMoreResults(2);
-    } else if (currentViewport > 1024) {
-      setFirstResults(12);
-      setMoreResults(3);
+    if (currentViewport <= MOBILE_WIDTH) {
+      setFirstResults(MOBILE_RESULT);
+      setMoreResults(MOBILE_MORE);
+    } else if (currentViewport <= DESKTOP_WIDTH) {
+      setFirstResults(TABLET_RESULT);
+      setMoreResults(TABLET_MORE);
+    } else if (currentViewport > DESKTOP_WIDTH) {
+      setFirstResults(DESKTOP_RESULT);
+      setMoreResults(DESKTOP_MORE);
     }
   }, [currentViewport]);
     
@@ -247,10 +252,20 @@ function App() {
     localStorage.removeItem('checkboxStatus');
     localStorage.removeItem('initialMovies');
     localStorage.removeItem('moviesStorage');
-    localStorage.removeItem('savedMoviesStorage');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    setInitialMovies([]);
+    setSavedMovies([]);
+    setFilteredMovies([]);
+    setRequest('');
+    setCheckboxStatus(false);
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/');
+  }
+
+  function closeErrorPopup() {
+    setErrorPopupIsOpen(false);
   }
 
   return (
@@ -297,17 +312,21 @@ function App() {
             />
 
             <Route path="/signup">
+              {loggedIn ? <Redirect to='/' /> :
                 <Register 
                   onRegister={handleRegisterSubmit}
                   registerErrorMessage={registerErrorMessage}
                 />
+              }  
             </Route>
 
             <Route path="/signin">
+              {loggedIn ? <Redirect to='/' /> :
                 <Login 
                   onLogin={handleLoginSubmit}
                   loginErrorMessage={loginErrorMessage}
-                /> 
+                />
+              }  
             </Route>
 
             <Route path="*">
@@ -319,6 +338,11 @@ function App() {
           <Route exact path={["/", "/movies", "/saved-movies"]}>
             <Footer />
           </Route>
+
+          <ErrorPopup 
+            isOpen={errorPopupIsOpen}
+            onClose={closeErrorPopup}
+          />
 
       </div>
     </CurrentUserContext.Provider>

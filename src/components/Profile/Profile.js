@@ -55,9 +55,17 @@ function Profile({onUpdateUser, profileMessage, onSignOut}) {
     e.preventDefault();
     onUpdateUser({
       name: values.name,
-       email: values.email,
+      email: values.email,
     });
   }
+
+  useEffect(() => {
+    setIsValid(false);
+    setValues({
+      name: currentUser.name,
+      email: currentUser.email,
+    });
+  }, [onUpdateUser])
 
   return(
     <section className="profile">
