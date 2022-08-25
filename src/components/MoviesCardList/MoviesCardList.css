@@ -51,8 +51,14 @@
   }
 }
 
+.movies-list__btn-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 80px;
+}
+
 .movies-list__button {
-  margin-top: 80px;
   width: 320px;
   height: 36px;
   background-color: #2f2f2f;
@@ -65,14 +71,20 @@
   align-self: center;
   cursor: pointer;
   transition: .5s;
+  visibility: visible;
 }
 
 .movies-list__button:hover {
-  background-color: #3DDC84;
+  opacity: .6;
 }
 
 @media screen and (max-width: 425px) {
   .movies-list__button {
     width: 240px;
   }
+}
+
+.movies-list__button_hidden {
+  visibility: hidden;
+  opacity: 0;
 }

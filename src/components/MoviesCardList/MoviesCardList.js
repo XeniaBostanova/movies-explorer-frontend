@@ -1,9 +1,20 @@
 import React from 'react';
 import './MoviesCardList.css';
-import {movies} from '../../utils/movies'
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+function MoviesCardList({
+  movies,
+  savedMovies,
+  onSaveMovie,
+  onDeleteMovie,
+  preloader,
+  isSearchDone,
+  onRenderMovies,
+  moreButtonVisibility,
+  }) {
+
+  const moreButtonClassName = moreButtonVisibility ? `movies-list__button` : `movies-list__more-button movies-list__button_hidden`;
+
   return (
     <section className="movies-container">
       <ul className="movies-list">
@@ -12,11 +23,20 @@ function MoviesCardList() {
             <MoviesCard
               movie={movie}
               key={movie._id || movie.id}
+              savedMovies={savedMovies}
+              onSaveMovie={onSaveMovie}
+              onDeleteMovie={onDeleteMovie}
             />
           ))
         }
-      </ul>  
-      <button className="movies-list__button" type="button">Ещё</button>
+      </ul>
+      {!preloader ? isSearchDone
+          ? <div className="movies-list__btn-section">
+              <button onClick={onRenderMovies} className={moreButtonClassName} type="button">Ещё</button>
+            </div>
+          : ("")
+        : ("")
+        }
     </section>
   )
 }
